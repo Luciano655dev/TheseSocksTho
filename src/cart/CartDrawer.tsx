@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useCart } from "../cart/CartContext"
 import "./CartDrawer.css"
 
@@ -14,9 +14,11 @@ export default function CartDrawer() {
     clear,
   } = useCart()
 
+  const [showCheckout, setShowCheckout] = useState(false)
+
   useEffect(() => {
     if (!open) return
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart()
+    const onKey = (e: any) => e.key === "Escape" && closeCart()
     window.addEventListener("keydown", onKey)
     const prev = document.body.style.overflow
     document.body.style.overflow = "hidden"
@@ -112,12 +114,152 @@ export default function CartDrawer() {
             >
               Clear
             </button>
-            <button className="btn primary" disabled={items.length === 0}>
+            <button
+              className="btn primary"
+              disabled={items.length === 0}
+              onClick={() => setShowCheckout(true)}
+            >
               Checkout
             </button>
           </div>
         </footer>
       </aside>
+
+      {showCheckout && (
+        <CheckoutModal
+          onClose={() => setShowCheckout(false)}
+          payload={{ items, subtotal }}
+          onAfterSuccess={() => {
+            // optional: clear cart & keep popup with success message visible
+            clear()
+          }}
+        />
+      )}
+    </div>
+  )
+}
+function CheckoutModal({ onClose, payload, onAfterSuccess }: any) {
+  const [email, setEmail] = useState("")
+  const [status, setStatus] = useState("form") // "form" | "sending" | "success" | "error"
+  const [error, setError] = useState("")
+
+  async function handleSubmit(e: any) {
+    e.preventDefault()
+    setError("")
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Enter a valid email.")
+      return
+    }
+    setStatus("sending")
+
+    try {
+      const res = await fetch("/api/checkout-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerEmail: email,
+          cart: payload.items,
+          subtotal: payload.subtotal,
+        }),
+      })
+
+      if (!res.ok) throw new Error("Failed to send")
+
+      setStatus("success")
+      onAfterSuccess?.()
+    } catch (err) {
+      setStatus("error")
+      setError("Could not send. Please try again.")
+    }
+  }
+
+  return (
+    <div
+      className="cart-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="checkout-modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#fff",
+          borderRadius: 12,
+          padding: 20,
+          maxWidth: 420,
+          width: "90%",
+          margin: "10vh auto",
+          boxShadow: "0 10px 30px rgba(0,0,0,.1)",
+        }}
+      >
+        {status === "form" && (
+          <>
+            <h3 style={{ marginTop: 0 }}>Enter your email</h3>
+            <p>We’ll process your purchase and send you updates.</p>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                style={{ width: "100%", padding: 10, marginBottom: 10 }}
+              />
+              {error && (
+                <div style={{ color: "crimson", marginBottom: 8 }}>{error}</div>
+              )}
+              <button
+                type="submit"
+                className="btn primary"
+                style={{ width: "100%" }}
+              >
+                Send Order
+              </button>
+              <button
+                type="button"
+                className="btn light"
+                onClick={onClose}
+                style={{ width: "100%", marginTop: 8 }}
+              >
+                Cancel
+              </button>
+            </form>
+          </>
+        )}
+
+        {status === "sending" && (
+          <p style={{ margin: 0 }}>Sending your order…</p>
+        )}
+
+        {status === "success" && (
+          <>
+            <h3 style={{ marginTop: 0 }}>You're all set 🎉</h3>
+            <p>Your purchase will be processed and we will notify you!</p>
+            <button
+              className="btn primary"
+              onClick={onClose}
+              style={{ width: "100%" }}
+            >
+              Close
+            </button>
+          </>
+        )}
+
+        {status === "error" && (
+          <>
+            <h3 style={{ marginTop: 0 }}>Oops</h3>
+            <p>{error}</p>
+            <button
+              className="btn primary"
+              onClick={() => setStatus("form")}
+              style={{ width: "100%" }}
+            >
+              Try Again
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }
