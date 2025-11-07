@@ -1,3 +1,4 @@
+import Newsletter from "../components/Newsletter"
 import "./Home.css"
 import { Link } from "react-router-dom"
 
@@ -70,6 +71,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Newsletter />
 
       {/* About / Story */}
       <section id="about" className="tst-about">

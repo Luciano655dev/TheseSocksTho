@@ -162,3 +162,92 @@
   margin-bottom: 14px;
   color: #e7e7e7;
 }
+
+/* Newsletter */
+.tst-newsletter {
+  padding: 28px 20px;
+  max-width: 1100px;
+  margin: 20px auto;
+  background: #111;
+  color: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tst-newsletter-inner {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+}
+
+.tst-newsletter-copy h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.tst-newsletter-copy p {
+  color: #e9e9e9;
+}
+
+/* Form */
+.tst-newsletter-form {
+  display: grid;
+  gap: 8px;
+}
+.tst-hp {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+
+.tst-inputs {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+.tst-inputs input {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 0 12px;
+  outline: none;
+}
+.tst-inputs input::placeholder {
+  color: #9a9a9a;
+}
+
+.tst-newsletter-error {
+  color: #ffb4b4;
+  font-size: 14px;
+}
+
+.tst-newsletter-success {
+  background: #0e1f0e;
+  border: 1px solid #1f5f1f;
+  color: #bff0bf;
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.tst-newsletter-small {
+  font-size: 12px;
+  color: #cfcfcf;
+}
+
+/* Desktop layout */
+@media (min-width: 900px) {
+  .tst-newsletter-inner {
+    grid-template-columns: 1.1fr 1.3fr;
+    align-items: center;
+  }
+
+  .tst-inputs {
+    grid-template-columns: 1fr 1.2fr auto; /* name | email | button */
+  }
+
+  .tst-newsletter-copy h2 {
+    font-size: 28px;
+  }
+}

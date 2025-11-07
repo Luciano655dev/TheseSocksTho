@@ -4,7 +4,7 @@
 # TheseSocksTho 🧦
 
 **Statement socks. Everyday comfort.**  
-A fun, minimal e-commerce storefront built with React + TypeScript.
+A fun, minimal e-commerce for selling socks built with React + TypeScript.
 
 </div>
 
@@ -17,7 +17,7 @@ The goal is simple:
 
 - ✅ Clean, modern shopping experience
 - ✅ Fully responsive (mobile + desktop)
-- ✅ Add-to-cart system with quantity limits
+- ✅ Add-to-cart system
 - ✅ Product data is loaded remotely (JSON hosted on GitHub Pages)
 - ✅ No CMS required — just update `products.json` and images
 
@@ -42,7 +42,7 @@ You can deploy it to **Vercel, Netlify, Render, GitHub Pages, Cloudflare Pages**
 
 ## 📦 Features
 
-- 🧦 Product listing grid (1 per row on mobile, 4 on desktop)
+- 🧦 Product listing
 - ✅ Modal to view product details
 - ✅ Add to cart / remove from cart
 - ✅ Quantity limit per product (`max_qnt`)
@@ -50,32 +50,6 @@ You can deploy it to **Vercel, Netlify, Render, GitHub Pages, Cloudflare Pages**
 - 📂 Products controlled remotely via JSON — update without redeploy
 - 📱 Fully responsive layout
 - ⚡ Fast & lightweight (no heavy libraries)
-
----
-
-## 🗂 Project Structure
-
-```
-src/
-  components/
-    ShopItem.tsx
-    CartDrawer.tsx
-    CartButton.tsx
-  cart/
-    CartContext.tsx
-  data/
-    useProducts.ts
-  pages/
-    Home.tsx
-    Shop.tsx
-  styles/
-    global.css
-    ShopGrid.css
-    Home.css
-public/
-  thesesockstho_logo.png
-  sockexample.png
-```
 
 ---
 
@@ -97,7 +71,7 @@ To update products, just edit:
     "id": "sock-1",
     "title": "TheseSocksTho #1",
     "price": 9.99,
-    "image": "https://<username>.github.io/thesesockstho/images/sock1.png",
+    "image": "https://Luciano655dev.github.io/thesesockstho_data/images/sock1.png",
     "max_qnt": 3,
     "description": "Soft cotton. Stay-up cuff. Breathable knit.",
     "active": true

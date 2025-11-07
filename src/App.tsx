@@ -7,14 +7,14 @@ import Footer from "./components/footer/footer"
 
 function App() {
   return (
-    <body>
+    <div>
       <ScrollToTop />
       <Navbar />
 
       <Outlet />
 
       <Footer />
-    </body>
+    </div>
   )
 }
 
