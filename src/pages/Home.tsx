@@ -15,9 +15,9 @@ export default function Home() {
           </p>
 
           <div className="tst-hero-ctas">
-            <a href="/shop" className="tst-btn primary">
+            <Link to="/shop" className="tst-btn primary">
               Browse Best Sellers
-            </a>
+            </Link>
             <a href="#why" className="tst-btn">
               Why TheseSocksTho?
             </a>
