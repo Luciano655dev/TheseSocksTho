@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { CartProvider, useCart } from "../cart/CartContext"
 import CartDrawer from "../cart/CartDrawer"
 import ShopItem from "../components/ShopItem"
@@ -6,16 +7,38 @@ import "../styles/ShopGrid.css"
 
 function ShopGrid() {
   const { products, loading, error } = useProducts()
+  const [query, setQuery] = useState("")
+
+  const visibleProducts = products.filter((p) =>
+    p.title.toLowerCase().includes(query.toLowerCase())
+  )
 
   return (
     <div className="page">
+      {/* ✅ Search bar */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search socks…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Search products"
+        />
+      </div>
+
       {loading && <p>Loading products…</p>}
       {error && <p style={{ color: "crimson" }}>{error}</p>}
 
       <div className="shop-grid">
-        {products.map((p) => (
+        {visibleProducts.map((p) => (
           <ShopItem key={p.id} {...p} />
         ))}
+
+        {visibleProducts.length === 0 && !loading && (
+          <p style={{ padding: "18px", textAlign: "center", color: "#555" }}>
+            No products found.
+          </p>
+        )}
       </div>
     </div>
   )
