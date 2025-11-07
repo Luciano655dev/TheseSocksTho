@@ -1,0 +1,33 @@
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+.hidden.transitioned {
+  position: absolute;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in, visibility 0.3s ease-in;
+}
+/* MENU VISIBLE OR HIDDEN */
+.normal-items {
+  display: block;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+.menuHidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-out, visibility 0.5s ease-out;
+}
+
+.menuVisible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in, visibility 0.5s ease-in;
+}
