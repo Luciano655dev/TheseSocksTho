@@ -151,6 +151,7 @@ function CheckoutModal({ onClose, payload, onAfterSuccess }: any) {
       return
     }
     setStatus("sending")
+    console.log("one")
 
     try {
       const res = await fetch("/api/checkout-intent", {
@@ -162,12 +163,14 @@ function CheckoutModal({ onClose, payload, onAfterSuccess }: any) {
           subtotal: payload.subtotal,
         }),
       })
+      console.log("two")
 
       if (!res.ok) throw new Error("Failed to send")
 
       setStatus("success")
       onAfterSuccess?.()
     } catch (err) {
+      console.log(err)
       setStatus("error")
       setError("Could not send. Please try again.")
     }
